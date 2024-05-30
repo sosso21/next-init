@@ -1,0 +1,42 @@
+datasource database {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum locale {
+  ar
+  en
+  es
+  fr
+}
+
+model Ad {
+  id        Int       @id @default(autoincrement())
+  src       String    @unique @database.VarChar(255)
+  href      String    @unique @database.VarChar(255)
+  alt       String?   @unique @database.VarChar(255)
+  onSlider  Boolean   @default(true) @map("on_slider")
+  onAside   Boolean   @default(false) @map("on_aside")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("ads")
+}
+
+model Log {
+  id          Int       @id @default(autoincrement())
+  ip          String?
+  JWToken     String?   @map("json_web_token")
+  userAgent   String?   @map("user_agent")
+  xAppVersion String?   @map("x_app_version")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  @@map("logs")
+}
