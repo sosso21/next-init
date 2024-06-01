@@ -94,14 +94,14 @@ model Ad {
 }
 
 model Log {
-  id          Int       @id @default(autoincrement())
-  ip          String?
-  JWToken     String?   @map("json_web_token")
-  userAgent   String?   @map("user_agent")
-  xAppVersion String?   @map("x_app_version")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime? @updatedAt @map("updated_at")
-  deletedAt   DateTime? @map("deleted_at")
+  id           Int       @id @default(autoincrement())
+  ip           String?
+  jsonWebToken String?   @map("json_web_token")
+  userAgent    String?   @map("user_agent")
+  xAppVersion  String?   @map("x_app_version")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
 
   @@map("logs")
 }
