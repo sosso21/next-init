@@ -1,12 +1,18 @@
 import { ThemeModeToggle } from "@/components/ThemeModeToggle";
+import { Signika } from "next/font/google";
 import Image from "next/image";
+import { FacebookSignIn } from "../components/facebookSignIn";
+import { GoogleSignIn } from "../components/googleSignIn";
+import { Nuqs } from "../components/nuqsForm";
 
 export default function Home() {
   return (
     <main className="flex flex-col justify-between items-center p-24 min-h-screen">
-      <div className="z-10 lg:flex justify-between items-center w-full max-w-5xl font-mono text-sm">
+      <div className="z-10 lg:flex flex-col justify-between items-center w-full max-w-5xl font-mono text-sm">
         <ThemeModeToggle />
-
+        <FacebookSignIn />
+        <GoogleSignIn />
+        <Nuqs />
         <p className="top-0 left-0 lg:static fixed flex justify-center border-gray-300 dark:border-neutral-800 lg:bg-gray-200 lg:dark:bg-zinc-800/30 dark:bg-zinc-800/30 bg-gradient-to-b from-zinc-200 dark:from-inherit backdrop-blur-2xl lg:p-4 pt-8 pb-6 lg:border border-b lg:rounded-xl w-full lg:w-auto">
           Get started by editing&nbsp;
           <code className="font-bold font-mono">app/page.tsx</code>
