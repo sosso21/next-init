@@ -14,6 +14,71 @@ enum locale {
   fr
 }
 
+model Session {
+  id           String    @id @default("cuid")
+  sessionToken String    @unique
+  userId       String
+  expires      DateTime
+  user         User      @relation(fields: [userId], references: [id])
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@index([userId])
+}
+
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
+}
+
+model User {
+  id            String          @id @default("cuid")
+  name          String?
+  username      String?         @unique
+  email         String?         @unique
+  emailVerified DateTime?
+  image         String?
+  Session       Session[]
+  Account       Account?
+  Authenticator Authenticator[]
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime?       @updatedAt @map("updated_at")
+  deletedAt     DateTime?       @map("deleted_at")
+}
+
+model Account {
+  id                       String    @id @default("cuid")
+  userId                   String    @unique
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?   @database.Text
+  access_token             String?   @database.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?   @database.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User?     @relation(fields: [userId], references: [id])
+  createdAt                DateTime  @default(now()) @map("created_at")
+  updatedAt                DateTime? @updatedAt @map("updated_at")
+  deletedAt                DateTime? @map("deleted_at")
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
 model Ad {
   id        Int       @id @default(autoincrement())
   src       String    @unique @database.VarChar(255)
@@ -29,14 +94,22 @@ model Ad {
 }
 
 model Log {
-  id          Int       @id @default(autoincrement())
-  ip          String?
-  JWToken     String?   @map("json_web_token")
-  userAgent   String?   @map("user_agent")
-  xAppVersion String?   @map("x_app_version")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime? @updatedAt @map("updated_at")
-  deletedAt   DateTime? @map("deleted_at")
+  id           Int       @id @default(autoincrement())
+  ip           String?
+  jsonWebToken String?   @map("json_web_token")
+  userAgent    String?   @map("user_agent")
+  xAppVersion  String?   @map("x_app_version")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
 
   @@map("logs")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
