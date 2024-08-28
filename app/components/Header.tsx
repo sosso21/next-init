@@ -37,7 +37,6 @@ export const Header = ({ locale }: { locale: Lang }) => {
               </Link>
             </li>
           </ul>
-          <MobileSideBarButton />
         </div>
       </div>
     </header>
