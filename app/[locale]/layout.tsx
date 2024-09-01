@@ -11,6 +11,7 @@ import { languageDirection } from "@/lib/use-translation/direction";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AppProviders } from "../components/queryProviders";
 import { Header } from "../components/Header";
+import { Ping } from "../components/ping";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({ children, params }: RootChildrenType) {
           fontSans.variable
         )}
       >
+        <Ping />
         <AppProviders>
           <ThemeProvider
             attribute="class"
