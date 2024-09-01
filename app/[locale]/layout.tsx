@@ -40,8 +40,8 @@ export default function RootLayout({ children, params }: RootChildrenType) {
           fontSans.variable
         )}
       >
-        <Ping />
         <AppProviders>
+        <Ping />
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
