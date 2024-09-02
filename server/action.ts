@@ -12,7 +12,6 @@ export const signInWithProvider = async (provider: AuthProviderEnum) => {
 
 export async function sayHello() {
   const reqHeaders = headers();
-  const referer = reqHeaders.get("referer");
 
   const data = {
     ip: reqHeaders.get("x-forwarded-for") as string,
@@ -20,14 +19,16 @@ export async function sayHello() {
     xAppVersion: reqHeaders.get("sec-ch-ua"),
   };
 
-  const kv_ip = await kv.get(`${process.env.PROJECT_NAME ?? ""}_${data.ip}`);
+  const key = `${process.env.PROJECT_NAME ?? ""}_${data.ip}`;
+  const kv_ip = await kv.get(key);
 
-  await kv.set(data.ip, "OK", {
+  await kv.set(key, "OK", {
     ex: +(process.env.TTS_TIME as string) ?? 10,
   });
 
   if (!kv_ip && process.env.NODE_ENV == "production") {
     //  await prisma.log.create({  data: data, });
   }
+
   return "OK";
 }
