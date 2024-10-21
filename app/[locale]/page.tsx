@@ -1,25 +1,32 @@
+
 import { ThemeModeToggle } from "@/components/ThemeModeToggle";
 import { Signika } from "next/font/google";
 import Image from "next/image";
 import { FacebookSignIn } from "../components/facebookSignIn";
 import { GoogleSignIn } from "../components/googleSignIn";
 import { Nuqs } from "../components/nuqsForm";
+import { Button } from "@/components/ui/button";
+import { dialogStore } from "../components/DialogMessage";
+import { DialogDemo } from "../components/dialogDemo";
 
 export default function Home() {
+  
   return (
-    <main className="flex flex-col justify-between items-center p-24 min-h-screen">
-      <div className="z-10 lg:flex flex-col justify-between items-center w-full max-w-5xl font-mono text-sm">
+    <main className="flex flex-col items-center justify-between min-h-screen p-24">
+      <div className="z-10 flex-col items-center justify-between w-full max-w-5xl font-mono text-sm lg:flex">
         <ThemeModeToggle />
         <FacebookSignIn />
         <GoogleSignIn />
+        
+        <DialogDemo />
         <Nuqs />
-        <p className="top-0 left-0 lg:static fixed flex justify-center border-gray-300 dark:border-neutral-800 lg:bg-gray-200 lg:dark:bg-zinc-800/30 dark:bg-zinc-800/30 bg-gradient-to-b from-zinc-200 dark:from-inherit backdrop-blur-2xl lg:p-4 pt-8 pb-6 lg:border border-b lg:rounded-xl w-full lg:w-auto">
+        <p className="fixed top-0 left-0 flex justify-center w-full pt-8 pb-6 border-b border-gray-300 lg:static dark:border-neutral-800 lg:bg-gray-200 lg:dark:bg-zinc-800/30 dark:bg-zinc-800/30 bg-gradient-to-b from-zinc-200 dark:from-inherit backdrop-blur-2xl lg:p-4 lg:border lg:rounded-xl lg:w-auto">
           Get started by editing&nbsp;
-          <code className="font-bold font-mono">app/page.tsx</code>
+          <code className="font-mono font-bold">app/page.tsx</code>
         </p>
-        <div className="bottom-0 left-0 lg:static fixed flex justify-center items-end bg-gradient-to-t from-white dark:from-black via-white dark:via-black lg:bg-none w-full h-48 lg:size-auto">
+        <div className="fixed bottom-0 left-0 flex items-end justify-center w-full h-48 lg:static bg-gradient-to-t from-white dark:from-black via-white dark:via-black lg:bg-none lg:size-auto">
           <a
-            className="flex place-items-center gap-2 p-8 lg:p-0 pointer-events-none lg:pointer-events-auto"
+            className="flex gap-2 p-8 pointer-events-none place-items-center lg:p-0 lg:pointer-events-auto"
             href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
@@ -48,16 +55,16 @@ export default function Home() {
         />
       </div>
 
-      <div className="grid lg:grid-cols-4 bg-red-5000 mb-32 lg:mb-0 lg:w-full lg:max-w-5xl text-center lg:text-left">
+      <div className="grid mb-32 text-center lg:grid-cols-4 bg-red-5000 lg:mb-0 lg:w-full lg:max-w-5xl lg:text-left">
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="hover:border-gray-300 hover:dark:border-neutral-700 hover:bg-gray-100 hover:dark:bg-neutral-800/30 px-5 py-4 border border-transparent rounded-lg transition-colors group"
+          className="px-5 py-4 transition-colors border border-transparent rounded-lg hover:border-gray-300 hover:dark:border-neutral-700 hover:bg-gray-100 hover:dark:bg-neutral-800/30 group"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className="mb-3 font-semibold text-2xl">
+          <h2 className="mb-3 text-2xl font-semibold">
             Docs{" "}
-            <span className="inline-block motion-reduce:transform-none transition-transform group-hover:translate-x-1">
+            <span className="inline-block transition-transform motion-reduce:transform-none group-hover:translate-x-1">
               -&gt;
             </span>
           </h2>
@@ -68,13 +75,13 @@ export default function Home() {
 
         <a
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="hover:border-gray-300 hover:dark:border-neutral-700 hover:bg-gray-100 hover:dark:bg-neutral-800/30 px-5 py-4 border border-transparent rounded-lg transition-colors group"
+          className="px-5 py-4 transition-colors border border-transparent rounded-lg hover:border-gray-300 hover:dark:border-neutral-700 hover:bg-gray-100 hover:dark:bg-neutral-800/30 group"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className="mb-3 font-semibold text-2xl">
+          <h2 className="mb-3 text-2xl font-semibold">
             Learn{" "}
-            <span className="inline-block motion-reduce:transform-none transition-transform group-hover:translate-x-1">
+            <span className="inline-block transition-transform motion-reduce:transform-none group-hover:translate-x-1">
               -&gt;
             </span>
           </h2>
@@ -85,13 +92,13 @@ export default function Home() {
 
         <a
           href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="hover:border-gray-300 hover:dark:border-neutral-700 hover:bg-gray-100 hover:dark:bg-neutral-800/30 px-5 py-4 border border-transparent rounded-lg transition-colors group"
+          className="px-5 py-4 transition-colors border border-transparent rounded-lg hover:border-gray-300 hover:dark:border-neutral-700 hover:bg-gray-100 hover:dark:bg-neutral-800/30 group"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className="mb-3 font-semibold text-2xl">
+          <h2 className="mb-3 text-2xl font-semibold">
             Templates{" "}
-            <span className="inline-block motion-reduce:transform-none transition-transform group-hover:translate-x-1">
+            <span className="inline-block transition-transform motion-reduce:transform-none group-hover:translate-x-1">
               -&gt;
             </span>
           </h2>
@@ -102,13 +109,14 @@ export default function Home() {
 
         <a
           href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="hover:border-gray-300 hover:dark:border-neutral-700 hover:bg-gray-100 hover:dark:bg-neutral-800/30 px-5 py-4 border border-transparent rounded-lg transition-colors group"
+          className="px-5 py-4 transition-colors border border-transparent rounded-lg hover:border-gray-300 hover:dark:border-neutral-700 hover:bg-gray-100 hover:dark:bg-neutral-800/30 group"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className="mb-3 font-semibold text-2xl">
+          <h2 className="mb-3 text-2xl font-semibold">
+
             Deploy{" "}
-            <span className="inline-block motion-reduce:transform-none transition-transform group-hover:translate-x-1">
+            <span className="inline-block transition-transform motion-reduce:transform-none group-hover:translate-x-1">
               -&gt;
             </span>
           </h2>
