@@ -13,16 +13,16 @@ export const Header = ({ locale }: { locale: Lang }) => {
 
   return (
     <header className="border-gray-200 px-4 lg:px-6 py-2.5 bg-ring w-full">
-      <div className="flex justify-between items-center mx-auto max-w-screen-2xl">
+      <div className="flex items-center justify-between mx-auto max-w-screen-2xl">
         <Link aria-label={t("title")} href={`/${locale}`}>
           Init
         </Link>
 
         <div
-          className="flex justify-end items-center lg:order-1 w-full lg:w-auto"
+          className="flex items-center justify-end w-full lg:order-1 lg:w-auto"
           id="mobile-menu-2"
         >
-          <ul className="md:flex flex-row justify-end lg:space-x-8 hidden mt-4 lg:mt-0 font-medium">
+          <ul className="flex-row justify-end hidden mt-4 font-medium md:flex lg:space-x-8 lg:mt-0">
             <li>
               <ThemeModeToggle size="lg" className="w-full" variant="outline" />
             </li>
@@ -30,7 +30,7 @@ export const Header = ({ locale }: { locale: Lang }) => {
               <LocaleModeToggle />
             </li>
             <li>
-              <Link aria-label={t("login")} href={`${locale}/auth`}>
+              <Link aria-label={t("auth")} href={`${locale}/auth`}>
                 <Button>
                   <UserPlusIcon className="inline-block mx-4" /> {t("login")}
                 </Button>

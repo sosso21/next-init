@@ -12,6 +12,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { AppProviders } from "../components/queryProviders";
 import { Header } from "../components/Header";
 import { Ping } from "../components/ping";
+import { StoreDialogMessage } from "../components/DialogMessage";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -49,6 +50,8 @@ export default function RootLayout({ children, params }: RootChildrenType) {
             disableTransitionOnChange
           >
             <Header locale={params.locale} />
+            
+            <StoreDialogMessage />
             {children}
           </ThemeProvider>
         </AppProviders>

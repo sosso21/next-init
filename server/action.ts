@@ -19,7 +19,7 @@ export async function sayHello() {
     xAppVersion: reqHeaders.get("sec-ch-ua"),
   };
 
-  const key = `${process.env.PROJECT_NAME ?? ""}_${data.ip}`;
+  const key = `PING_${process.env.PROJECT_NAME ?? ""}_${data.ip}`;
   const kv_ip = await kv.get(key);
 
   await kv.set(key, "OK", {
