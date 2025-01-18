@@ -1,8 +1,8 @@
+import { createId } from '@paralleldrive/cuid2';
 import { $Enums } from "@prisma/client";
 import { prisma } from "../..//lib/prisma";
 import { Logger } from "tslog";
-import { getPicture } from "./data/reviews";
-import { createId } from "@paralleldrive/cuid2";
+import { getPicture } from "../../lib/getPicture"; 
 import { stringToSlug } from "../../lib/stingToSlug";
 import casual from "casual";
 

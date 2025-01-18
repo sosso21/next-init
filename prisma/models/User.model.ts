@@ -4,7 +4,6 @@ import SessionModel from "./Session.model";
 import AccountModel from "./Account.model";
 import AuthenticatorModel from "./Authenticator.model";
 import roleEnum from "../enums/role.enum";
-import GalleryModel from "./Gallery.model";
 
 export default createModel((UserModel) => {
   UserModel.string("id", { id: true, default: { cuid: true } })
@@ -21,9 +20,6 @@ export default createModel((UserModel) => {
     .relation("Account", AccountModel, { optional: true })
     .relation("Authenticator", AuthenticatorModel, { list: true })
 
-    .relation("galleries", GalleryModel, {
-      list: true,
-    })
     .json("phones", {
       list: true,
     })

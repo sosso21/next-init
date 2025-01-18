@@ -1,24 +1,4 @@
-import {
-  Heart,
-  PartyPopper,
-  Handshake,
-  Home,
-  BabyIcon,
-  ContactRound,
-  Zap,
-  Images,
-  Star,
-  MailPlus,
-  Settings,
-  ImageUp,
-  Plus,
-  MessageCircle,
-  LogOut,
-  LucideIcon,
-  ListTodo,
-  ClipboardPen,
-  Medal,
-} from "lucide-react";
+import { Home, LogOut, LucideIcon } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -45,7 +25,6 @@ import {
 } from "@/components/ui/collapsible";
 import { ThemeModeToggle } from "@/components/ThemeModeToggle";
 import { LocaleModeToggle } from "@/components/LocaleModeToggle";
-import { $Enums } from "@prisma/client";
 import { signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import Mini_DK_SVG from "../icons/mini-dk-svg";
@@ -70,99 +49,8 @@ export async function AppSidebar({ locale }: { locale: Lang }) {
       url: `/${locale}`,
       icon: Home,
     },
-    {
-      title: t("services"),
-      icon: Zap,
-      defaultOpen: true,
-      subItems: [
-        {
-          title: t("marriage"),
-          url: `/${locale}/marriage`,
-          icon: Heart,
-        },
-
-        {
-          title: t("portrait"),
-          url: `/${locale}/portrait`,
-          icon: ContactRound,
-        },
-        {
-          title: t("event"),
-          url: `/${locale}/event`,
-          icon: PartyPopper,
-        },
-        {
-          title: t("enterprise"),
-          url: `/${locale}/enterprise`,
-          icon: Handshake,
-        },
-        {
-          title: t("pregnancy"),
-          url: `/${locale}/pregnancy`,
-          icon: BabyIcon,
-        },
-      ],
-    },
-    {
-      title: t("galleries"),
-      url: `/${locale}/galleries/1`,
-      icon: Images,
-    },
-    {
-      title: t("reviews"),
-      url: `/${locale}/reviews/1`,
-      icon: Star,
-    },
-    {
-      title: t("contact-us"),
-      url: `/${locale}/dashboard/contact-us`,
-      icon: MailPlus,
-    },
-    {
-      title: t("messages"),
-      url: `/${locale}/dashboard/messages`,
-      icon: MessageCircle,
-    },
   ];
 
-  if (
-    !!(((profileOrAuth.auth as any)?.role as $Enums.role) ?? []).includes(
-      $Enums.role.ADMIN
-    )
-  ) {
-    navigation.push({
-      title: t("admin-panel"),
-      icon: Settings,
-      defaultOpen: true,
-      subItems: [
-        {
-          title: t("upload-images"),
-          url: `/${locale}/dashboard/upload-images`,
-          icon: ImageUp,
-        },
-        {
-          title: t("create-gallery"),
-          url: `/${locale}/dashboard/create-gallery`,
-          icon: Plus,
-        },
-        {
-          title: t("review-panel"),
-          url: `/${locale}/dashboard/reviews/1`,
-          icon: ListTodo,
-        },
-        {
-          title: t("collaborations"),
-          url: `/${locale}/dashboard/collaborations/1`,
-          icon: ClipboardPen,
-        },
-        {
-          title: t("contest-winning"),
-          url: `/${locale}/dashboard/contest-winning/1`,
-          icon: Medal,
-        },
-      ],
-    });
-  }
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>
@@ -281,3 +169,4 @@ export async function AppSidebar({ locale }: { locale: Lang }) {
     </Sidebar>
   );
 }
+ 

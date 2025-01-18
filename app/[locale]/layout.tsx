@@ -4,7 +4,6 @@ import "../globals.scss";
 
 import { cn } from "@/lib/utils";
 import { languages } from "@/lib/use-translation/languages-data";
-import { RootChildrenType } from "./types";
 import { languageDirection } from "@/lib/use-translation/direction";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AppProviders } from "../components/queryProviders";
@@ -16,6 +15,7 @@ import { redirect } from "next/navigation";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "../components/SideBar/app-sidebar";
 import { ConfirmationDialog } from "../components/DialogConfirm/components/ConfirmationDialog";
+import { RootChildrenType } from "./types";
 
 export const metadata: Metadata = {
   title: "DK | Photographe",
@@ -27,15 +27,19 @@ export async function generateStaticParams() {
     locale,
   }));
 }
-export default function RootLayout({ children, params }: RootChildrenType) {
-  if (!languages.includes(params.locale)) {
+export default async function RootLayout({
+  children,
+  params,
+}: RootChildrenType) {
+  const locale = (await params).locale;
+  if (!languages.includes(locale)) {
     redirect(`/${process.env.DEFAULT_LANGUAGE}`);
   }
 
   return (
     <html
-      lang={params.locale}
-      dir={languageDirection(params.locale)}
+      lang={locale}
+      dir={languageDirection(locale)}
       suppressHydrationWarning
     >
       <body
@@ -59,8 +63,8 @@ export default function RootLayout({ children, params }: RootChildrenType) {
             <ConfirmationDialog />
 
             <SidebarProvider className="md:flex-row flex-col overflow-x-hidden">
-              <AppSidebar locale={params.locale} />
-              <Header locale={params.locale} />
+              <AppSidebar locale={locale} />
+              <Header locale={locale} />
               {children}
             </SidebarProvider>
           </ThemeProvider>

@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import Facebook from "next-auth/providers/facebook";
 import google from "next-auth/providers/google";
 import github from "next-auth/providers/github";
 import NextAuth from "next-auth";
@@ -21,7 +20,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       apiKey: process.env.AUTH_RESEND_KEY,
       from: "no-reply@resend.dev",
       sendVerificationRequest: async (props) => {
-        const locale = cookies().get(cookieName)?.value;
+        const locale = await (await cookies()).get(cookieName)?.value;
         await CustomSendVerificationRequest({
           ...props,
           locale: locale as Lang,

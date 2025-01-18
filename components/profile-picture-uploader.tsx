@@ -1,5 +1,5 @@
+import { getPicture } from "@/lib/getPicture";
 import { cn } from "@/lib/utils";
-import { getPicture } from "@/prisma/seed/data/reviews";
 import { IconUpload } from "@tabler/icons-react";
 import Image from "next/image";
 

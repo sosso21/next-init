@@ -5,7 +5,7 @@ export const localeSchema = z.object({
   locale: z.custom<Lang>(),
 });
 export const LocaleParamsSchema = z.object({
-  params: localeSchema,
+  params: z.promise(localeSchema),
 });
 
 export const RootChildrenSchema = LocaleParamsSchema.extend({

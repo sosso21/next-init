@@ -7,10 +7,11 @@ export default async function RootLayout({
   children,
   params,
 }: RootChildrenType) {
+  const locale = (await params).locale;
   const session = await auth();
 
   if (session) {
-    redirect(`/${params.locale}/dashboard`);
+    redirect(`/${locale}/dashboard`);
   }
 
   return children;

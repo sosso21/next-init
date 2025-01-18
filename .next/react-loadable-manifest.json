@@ -1,1 +1,22 @@
-{}
+{
+  "node_modules\\.pnpm\\@tanstack+query-devtools@5.62.16\\node_modules\\@tanstack\\query-devtools\\build\\index.js -> ./DevtoolsComponent/HO4MOOFI.js": {
+    "id": null,
+    "files": []
+  },
+  "node_modules\\.pnpm\\@tanstack+query-devtools@5.62.16\\node_modules\\@tanstack\\query-devtools\\build\\index.js -> ./DevtoolsPanelComponent/HUY7CZI3.js": {
+    "id": null,
+    "files": []
+  },
+  "node_modules\\.pnpm\\next@15.1.4_react-dom@19.0.0_react@19.0.0__react@19.0.0_sass@1.83.4\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
+    "id": 5903,
+    "files": [
+      "static/chunks/903.567226ab539adf48.js"
+    ]
+  },
+  "node_modules\\.pnpm\\next@15.1.4_react-dom@19.0.0_react@19.0.0__react@19.0.0_sass@1.83.4\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
+    "id": 8089,
+    "files": [
+      "static/chunks/470.9b14f6ff2b69094e.js"
+    ]
+  }
+}
