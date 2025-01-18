@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Root Variables */
+@layer base {
+  :root {
+    /* General Theme Colors */
+    --background: hsl(240, 5.9%, 90%);
+    --foreground: hsl(240, 10%, 3.9%);
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(240, 10%, 3.9%);
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(240, 10%, 3.9%);
+    --border: hsl(240, 5.9%, 90%);
+    --input: hsl(240, 5.9%, 90%);
+    --primary: hsl(277, 44%, 45%);
+    --primary-foreground: hsl(277, 4.4%, 97.25%);
+    --secondary: hsl(272, 7%, 47%);
+    --secondary-foreground: hsl(272, 7%, 98%);
+    --accent: hsl(269, 3.05%, 96.05%);
+    --accent-foreground: hsl(269, 4.66%, 12.1%);
+    --destructive: hsl(0, 84.2%, 60.2%);
+    --destructive-foreground: hsl(0, 0%, 98%);
+    --muted: hsl(168, 76%, 36%);
+    --muted-foreground: hsl(142, 70.6%, 97.3%);
+    --ring: hsl(0, 0%, 83%);
+    --radius: 0.5rem;
+
+    /* Sidebar Variables Derived from General Variables */
+    --sidebar-background: var(--background);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+  }
+
+  /* Dark Theme Variables */
+  .dark {
+    --background: hsl(277, 28.6%, 3.6%);
+    --foreground: hsl(277, 4.4%, 97.25%);
+    --popover: hsl(277, 56.2%, 5.85%);
+    --popover-foreground: hsl(277, 4.4%, 97.25%);
+    --card: hsl(277, 56.2%, 5.85%);
+    --card-foreground: hsl(277, 4.4%, 97.25%);
+    --border: hsl(277, 22%, 13.5%);
+    --input: hsl(277, 22%, 13.5%);
+    --primary: hsl(277, 44%, 45%);
+    --primary-foreground: hsl(277, 4.4%, 97.25%);
+    --secondary: hsl(277, 22%, 13.5%);
+    --secondary-foreground: hsl(277, 4.4%, 97.25%);
+    --accent: hsl(277, 22%, 13.5%);
+    --accent-foreground: hsl(277, 4.4%, 97.25%);
+    --destructive: hsl(0, 84.2%, 60.2%);
+    --destructive-foreground: hsl(0, 0%, 98%);
+    --muted: hsl(142, 70.6%, 45.3%);
+    --muted-foreground: hsl(142, 70.6%, 97.3%);
+    --ring: hsl(0, 0%, 25%);
+
+    /* Sidebar Variables Derived from General Variables */
+    --sidebar-background: var(--background);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+  }
+}
+
+/* Global Styles */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

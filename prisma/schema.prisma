@@ -1,0 +1,356 @@
+datasource database {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum contactSubject {
+  CONTACT_US
+  QUOTE_REQUEST
+  PHOTO_SESSION_BOOKING
+  COLLABORATION_PROPOSAL
+  INFORMATION_REQUEST
+  SERVICE_INQUIRY
+  RESERVATION_MODIFICATION_OR_CANCELLATION
+  APPOINTMENT_REQUEST
+  PARTNERSHIP_PROPOSAL
+  COMPLAINT_OR_TECHNICAL_ISSUE
+  PHOTO_USAGE_REQUEST
+  OTHER
+}
+
+enum locale {
+  ar
+  en
+  es
+  fr
+}
+
+enum role {
+  USER
+  ADMIN
+}
+
+enum servicePage {
+  DEFAULT
+  MARRIAGE
+  PORTRAIT
+  EVENT
+  ENTERPRISE
+  PREGNANCY
+}
+
+model Session {
+  id           String    @id @default(cuid())
+  sessionToken String    @unique
+  userId       String
+  expires      DateTime
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@index([userId])
+}
+
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
+}
+
+model Image {
+  id           Int            @id @default(autoincrement())
+  webp         String
+  original     String
+  tumblr       String
+  host         String
+  galleries    Gallery[]
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime?      @updatedAt @map("updated_at")
+  deletedAt    DateTime?      @map("deleted_at")
+  Page         Page[]
+  GalleryImage GalleryImage[]
+
+  @@map("Images")
+}
+
+model Gallery {
+  id                   Int           @id @default(autoincrement())
+  slug                 String        @unique
+  profilePicture       String?       @map("profile_picture")
+  tumblrProfilePicture String?       @map("tumblr_profile_picture")
+  isVital              Boolean       @default(false) @map("is_vital")
+  images               Image[]
+  users                User[]
+  category             servicePage?  @default(DEFAULT) @map("category")
+  private              Boolean       @default(true) @map("private")
+  createdAt            DateTime      @default(now()) @map("created_at")
+  updatedAt            DateTime?     @updatedAt @map("updated_at")
+  deletedAt            DateTime?     @map("deleted_at")
+  GalleryImage         GalleryImage? @relation(fields: [galleryImageId], references: [id])
+  galleryImageId       Int?
+  GalleryUser          GalleryUser[]
+
+  @@map("Galleries")
+}
+
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  username      String?         @unique
+  email         String?         @unique
+  emailVerified DateTime?
+  image         String?
+  role          role[]          @default([USER])
+  Session       Session[]
+  Account       Account?
+  Authenticator Authenticator[]
+  galleries     Gallery[]
+  phones        Json[]
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime?       @updatedAt @map("updated_at")
+  deletedAt     DateTime?       @map("deleted_at")
+  GalleryUser   GalleryUser[]
+  Thread        Thread?         @relation(fields: [threadId], references: [id])
+  threadId      Int?
+  Message       Message[]
+  Review        Review[]
+}
+
+model Account {
+  id                       String    @id @default(cuid())
+  userId                   String    @unique
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?   @database.Text
+  access_token             String?   @database.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?   @database.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt                DateTime  @default(now()) @map("created_at")
+  updatedAt                DateTime? @updatedAt @map("updated_at")
+  deletedAt                DateTime? @map("deleted_at")
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Ad {
+  id        Int       @id @default(autoincrement())
+  src       String    @unique @database.VarChar(255)
+  href      String    @unique @database.VarChar(255)
+  alt       String?   @unique @database.VarChar(255)
+  onSlider  Boolean   @default(true) @map("on_slider")
+  onAside   Boolean   @default(false) @map("on_aside")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("Ads")
+}
+
+model ContestWinning {
+  id                Int                 @id @default(autoincrement())
+  title             String
+  description       String              @database.Text
+  picture           String?             @database.Text
+  blurPicture       String?             @map("blur_picture") @database.Text
+  link              String?
+  page              Page[]
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime?           @updatedAt @map("updated_at")
+  deletedAt         DateTime?           @map("deleted_at")
+  PageCollaboration PageCollaboration[]
+
+  @@map("Contest_Winning")
+}
+
+model Page {
+  id                 Int                  @id @default(autoincrement())
+  slug               String               @unique
+  backgroundColor    String?              @map("background_color")
+  backgroundOpacity  String?              @map("background_opacity")
+  backgroundImageId  Int?                 @map("background_image_id")
+  backgroundImage    Image?               @relation(fields: [backgroundImageId], references: [id])
+  category           servicePage          @unique @default(DEFAULT)
+  collaboration      Collaboration[]
+  ContestWinning     ContestWinning[]
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedAt          DateTime?            @updatedAt @map("updated_at")
+  deletedAt          DateTime?            @map("deleted_at")
+  PageCollaboration  PageCollaboration[]
+  PageContestWinning PageContestWinning[]
+
+  @@map("Pages")
+}
+
+model Collaboration {
+  id                 Int                  @id @default(autoincrement())
+  title              String
+  description        String               @database.Text
+  picture            String               @database.Text
+  blurPicture        String?              @map("blur_picture") @database.Text
+  link               String?
+  page               Page[]
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedAt          DateTime?            @updatedAt @map("updated_at")
+  deletedAt          DateTime?            @map("deleted_at")
+  PageContestWinning PageContestWinning[]
+
+  @@map("Collaborations")
+}
+
+model GalleryImage {
+  id        Int       @id @default(autoincrement())
+  imageId   Int       @map("image_id")
+  image     Image     @relation(fields: [imageId], references: [id])
+  galleryId Int       @map("gallery_id")
+  gallery   Gallery[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("gallery_images")
+}
+
+model GalleryUser {
+  id        Int       @id @default(autoincrement())
+  userId    String    @map("user_id")
+  user      User      @relation(fields: [userId], references: [id])
+  galleryId Int       @map("gallery_id")
+  gallery   Gallery   @relation(fields: [galleryId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("gallery_users")
+}
+
+model Log {
+  id           Int       @id @default(autoincrement())
+  userId       String?   @map("user_id")
+  ip           String?
+  cookies      String?   @map("cookie") @database.Text
+  userAgent    String?   @map("user_agent")
+  xAppVersion  String?   @map("x_app_version")
+  screenWidth  Int?      @map("screen_width")
+  screenHeight Int?      @map("screen_height")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@map("Logs")
+}
+
+model Thread {
+  id              Int       @id @default(autoincrement())
+  messages        Message[]
+  users           User[]
+  participantRole role[]    @map("participant_role")
+  lastMessageAt   DateTime? @map("last_message_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+  deletedAt       DateTime? @map("deleted_at")
+
+  @@map("Threads")
+}
+
+model Message {
+  id              Int             @id @default(autoincrement())
+  subject         contactSubject? @map("subject")
+  body            String          @database.Text
+  sender          User            @relation(fields: [senderId], references: [id])
+  senderId        String          @map("sender_id")
+  senderRole      role?           @map("sender_role")
+  threadId        Int             @map("thread_id")
+  thread          Thread          @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  readAt          DateTime?       @map("read_at")
+  fromContactForm Boolean         @default(false) @map("from_contact_form")
+  ip              String?
+  cookies         String?         @map("cookie") @database.Text
+  userAgent       String?         @map("user_agent")
+  xAppVersion     String?         @map("x_app_version")
+  screenWidth     Int?            @map("screen_width")
+  screenHeight    Int?            @map("screen_height")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime?       @updatedAt @map("updated_at")
+  deletedAt       DateTime?       @map("deleted_at")
+
+  @@map("Messages")
+}
+
+model PageCollaboration {
+  id               Int            @id @default(autoincrement())
+  pageId           Int            @map("page_id")
+  page             Page           @relation(fields: [pageId], references: [id])
+  contestWinningId Int            @map("contest_winning_id")
+  contestWinning   ContestWinning @relation(fields: [contestWinningId], references: [id])
+
+  @@map("Page_Contest_Winning")
+}
+
+model PageContestWinning {
+  id              Int           @id @default(autoincrement())
+  pageId          Int           @map("page_id")
+  page            Page          @relation(fields: [pageId], references: [id])
+  collaborationId Int           @map("collaboration_id")
+  collaboration   Collaboration @relation(fields: [collaborationId], references: [id])
+
+  @@map("page_collaborations")
+}
+
+model Review {
+  id               Int       @id @default(autoincrement())
+  profilePicture   String?   @map("profile_picture") @database.Text
+  author           String?
+  serviceQuality   Int       @map("service_quality")
+  responseTime     Int
+  professionalism  Int
+  valueForMoney    Int
+  flexibility      Int
+  rank             Float
+  title            String?
+  body             String    @database.Text
+  response         String?
+  user             User?     @relation(fields: [userId], references: [id])
+  userId           String?   @map("user_id")
+  isGhast          Boolean   @default(false) @map("is_ghast")
+  isAccepted       Boolean   @default(false) @map("is_accepted")
+  validatedByAdmin Boolean   @default(false) @map("validated_by_admin")
+  ip               String?
+  cookies          String?   @map("cookie") @database.Text
+  userAgent        String?   @map("user_agent")
+  xAppVersion      String?   @map("x_app_version")
+  screenWidth      Int?      @map("screen_width")
+  screenHeight     Int?      @map("screen_height")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime? @updatedAt @map("updated_at")
+  deletedAt        DateTime? @map("deleted_at")
+
+  @@map("Reviews")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
