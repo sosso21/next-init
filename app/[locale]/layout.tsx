@@ -18,9 +18,7 @@ import { ConfirmationDialog } from "../components/DialogConfirm/components/Confi
 import { RootChildrenType } from "./types";
 
 export const metadata: Metadata = {
-  title: "DK | Photographe",
-  description: "DK | Photographe",
-  icons: "/dk.svg",
+ //
 };
 export async function generateStaticParams() {
   return languages.map((locale) => ({
